@@ -48,6 +48,7 @@ and then
 
     (django) $ python manage.py makemigrations 
     (django) $ python manage.py migrate
+    (django) $ python manage.py runserver
 ***
 ## Creating An Administration Site
 
