@@ -23,6 +23,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^filer/', include('filer.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 
 

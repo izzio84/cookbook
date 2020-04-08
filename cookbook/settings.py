@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_better_admin_arrayfield.apps.DjangoBetterAdminArrayfieldConfig',
+    'crispy_forms',
+    'django_summernote',
     'adminsortable2',
     'taggit',
     'easy_thumbnails',
@@ -58,11 +60,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'cookbook.urls'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
