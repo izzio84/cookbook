@@ -1,0 +1,114 @@
+{% extends "base.html" %} 
+{% block title %} Home {% endblock title %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <div class="receipe-post-search mb-80">
+            <div class="container">
+                <form action="#" method="get">
+                {% csrf_token %}
+                    <div class="row">
+                    {% comment %} <div class="col-12 col-lg-10">
+                     {{ filter.form | crispy }}
+                     
+                     </div> {% endcomment %}
+                         {% for field in filter.form.visible_fields %}
+                            <div class="col-12 col-lg-5">
+                                {{ field.label_tag }}
+                                {{ field.errors }}
+                                {{ field }}
+                                {{ field.help_text }}
+                            </div>
+                        {% endfor %}
+                     <div class="col-12 col-lg-2 text-right">
+                     <label for="id_title">&nbsp;</label>
+                            <button type="submit" class="btn delicious-btn">Search</button>
+                     </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% comment %} <!-- Receipe Post Search -->
+        <div class="receipe-post-search mb-80">
+            <div class="container">
+                <form action="#" method="post">
+                    <div class="row">
+                        <div class="col-12 col-lg-5">
+                            <select name="select1" id="select1">
+                            
+                            {% for course in courselist %}<option value="{{course.id}}">{{course.course}}</option>{% endfor %}
+                                
+                            </select>
+                        </div>
+                      <div class="col-12 col-lg-3">
+                            <select name="select1" id="select2">
+                                <option value="1">All Receipies Categories</option>
+                                <option value="1">All Receipies Categories 2</option>
+                                <option value="1">All Receipies Categories 3</option>
+                                <option value="1">All Receipies Categories 4</option>
+                                <option value="1">All Receipies Categories 5</option>
+                            </select>
+                        </div> 
+                        <div class="col-12 col-lg-5">
+                            <input type="search" name="search" placeholder="Search Receipies">
+                        </div>
+                        <div class="col-12 col-lg-2 text-right">
+                            <button type="submit" class="btn delicious-btn">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> {% endcomment %}
+
+    <section class="top-catagory-area"></section>
+    <div class="container">
+            <div class="row">
+    {% for recipe in object_list %}
+    <!-- ##### Top Catagory Area Start ##### -->
+    
+        
+                <!-- Top Catagory Area -->
+                <div class="col-lg-6">
+                    <div class="single-top-catagory">
+                    {% thumbnail recipe.recipe_image 540x250 crop upscale  as thumb %}
+                        <img src="{{ thumb.url }}" alt="">
+                        <!-- Content -->
+                        <div class="top-cta-content">
+                            <h3>{{ recipe.title }}</h3>
+                            <h6>{{ recipe.course }} | {{ recipe.main_ingredient }}</h6>
+                            {% comment %} <a href="{% url 'recipe_detail' recipe.slug  %}" class="btn delicious-btn">See Full Receipe</a> {% endcomment %}
+                            <a href="{{ recipe.get_absolute_url }}" class="btn delicious-btn">See Full Receipe</a>
+                        </div>
+                    </div>
+                </div>
+
+    
+    <!-- ##### Top Catagory Area End ##### -->
+    {% endfor %}
+                </div>
+        </div>
+    </section>
+    {% if is_paginated %}
+        <nav aria-label="Page navigation conatiner"></nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="btn delicious-btn btn-4 m-1">&laquo; PREV </a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="btn delicious-btn btn-4 m-1"> NEXT &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h5>Page {{ page_obj.number }} of {{ paginator.num_pages }}</h5>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% comment %} {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %} {% endcomment %}
+{%endblock%}
+
+
+

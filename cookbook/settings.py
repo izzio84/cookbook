@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_better_admin_arrayfield.apps.DjangoBetterAdminArrayfieldConfig',
     'crispy_forms',
+    'django_filters',
     'django_summernote',
     'adminsortable2',
     'taggit',

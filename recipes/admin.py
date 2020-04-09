@@ -33,7 +33,7 @@ class CookingStepInline(SortableInlineAdminMixin,admin.TabularInline):
 @admin.register(models.Recipe)
 class RecipeAdmin(SummernoteModelAdmin):
     #list_per_page = 12
-    list_display = ['title','short_description','course','image_tag','status']
+    list_display = ['title','created_on','course','image_tag','status']
     #list_select_related = ('course')
     list_display_links = ['title']
     list_filter = ('status', 'created_on','course')

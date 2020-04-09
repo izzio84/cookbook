@@ -1,0 +1,185 @@
+{% extends 'base.html' %} 
+{% load thumbnail %}
+
+{% block content %}
+{% thumbnail recipe.recipe_image 1110x425 crop upscale  as thumb %}
+<!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ thumb.url }});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-text text-center">
+                        <h2>{{ recipe.title }}</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+<div class="receipe-post-area section-padding-80">
+
+        <!-- Receipe Slider -->
+        {% comment %} <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="receipe-slider owl-carousel">
+                        <img src="{{ thumb.url }}" alt="{{recipe.title}}">
+                    </div>
+                </div>
+            </div>
+        </div> {% endcomment %}
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                            <div class="single-blog-area mb-80">
+                              <!-- Thumbnail -->
+                              <div class="blog-thumbnail">
+                                  <img src="{{ thumb.url }}" alt="{{recipe.title}}">
+                                  <!-- Post Date -->
+                                  <div class="post-date">
+                                      <a href="#"><span>{{recipe.created_on|date:'d'}}</span>{{recipe.created_on|date:'M'}} <br> {{recipe.created_on|date:'Y'}}</a>
+                                  </div>
+                              </div>
+                            </div>
+                </div>
+            </div>
+        </div>   
+        
+
+
+
+
+        <!-- Receipe Content Area -->
+        <div class="receipe-content-area">
+            <div class="container">
+
+                 <div class="row">
+                     <div class="col-12 col-md-8">
+                        <div class="receipe-headline my-1">
+                        <!-- <h6 style="display: inline-block;">Course: <span class="badge badge-warning" style="display: inline-block;">{{ recipe.course }} </span></h6> -->
+                        <blockquote class="blockquote text-left">
+                          <h2>{{recipe.title}}</h2>
+                          {% if recipe.short_description %}<footer class="blockquote-footer font-italic">Course: {{ recipe.short_description }}</footer>{% endif %}
+                        </blockquote>
+                      {% if object.tags %}
+                      <h6 style="display: inline-block;">Tags: 
+                        {% for tag in object.tags.all %}
+                          <span class="badge badge-info" style="display: inline-block;">{{ tag.name }} </span>
+                        {% endfor %}
+                      </h6>
+                      {% endif %}
+                        <div class="receipe-duration">
+                          <h6>Course: {{recipe.course}}</h6>
+                          {% if recipe.main_ingredient %}<h6>Main Ingredient: {{recipe.main_ingredient}}</h6>{% endif %}
+                          {% if recipe.preparation_time %}<h6>Preparation Time: {{recipe.preparation_time}}</h6>{% endif %}
+                          {% if recipe.cooking_time %}<h6>Cooking Time: {{recipe.cooking_time}}s</h6>{% endif %}
+                          <h6>Yields: {{recipe.dose}} Servings</h6>
+                        </div>
+                        </div>
+                    </div> 
+
+                    <div class="col-12 col-md-4">
+                        <div class="receipe-ratings text-right my-1">
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                           <button href="#" class="btn delicious-btn" disabled>{{recipe.get_level_display}}</button>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                .receipe-headline span.badge {
+                    color: #fff;
+                }
+                </style>
+                {% if recipe.description %}
+                <div class="row">
+                    <div class="col-12">
+                      <blockquote class="blockquote font-italic">
+                        {{ recipe.description | safe | linebreaks }}
+                        </blockquote>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                      <h4>Preparation:</h4>
+                      <div class="single-preparation-step">
+                        {{ recipe.preparation | safe | linebreaks }}
+                      </div>
+                      {% for prep in recipe.cookingstep_set.all %}
+                        <!-- Single Preparation Step -->
+                          <div class="single-preparation-step d-flex">
+                              <h4>{{prep.order}}.</h4>
+                              <p>{{prep.step}}</p>
+                          </div>
+                      {% endfor %}
+                        
+                    </div>
+
+                    <!-- Ingredients -->
+                    <div class="col-12 col-lg-4">
+                        <div class="ingredients">
+                            <h4>Ingredients</h4>
+                            {% for ingredient in recipe.ingredient_set.all %}
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="{{ingredient.id}}">
+                                <label class="custom-control-label" for="{{ingredient.id}}">{{ingredient.ingredient}}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% if recipe.note %}
+                <div class="row">
+                    <div class="col-12">
+                      <blockquote class="blockquote font-italic">
+                        <h4>Note:</h4>
+                        {{ recipe.note | safe | linebreaks }}
+                        </blockquote>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading text-left">
+                            <h3>Leave a comment</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <input type="text" class="form-control" id="name" placeholder="Name">
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

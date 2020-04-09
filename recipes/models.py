@@ -45,8 +45,11 @@ class Recipe(models.Model):
     note = models.CharField(max_length=200,blank=True,null=True)
     main_ingredient = models.CharField(max_length=200,blank=True,null=True)
     class Meta:
+        ordering = ['-created_on','course']
         verbose_name = _("Recipe")
         verbose_name_plural = _("Recipes")
+
+
 
     def image_tag(self):
         if self.recipe_image:
@@ -57,6 +60,10 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse("recipe_detail", kwargs={"slug": str(self.slug)})
 
 class Course(models.Model):
     #course_id = models.AutoField(auto_created=True, primary_key=True, serialize=False)
@@ -79,6 +86,7 @@ class Course(models.Model):
         else:
             return mark_safe('<img src="data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" style="width: 45px; height:45px;" />')
     image_tag.short_description = 'Thumb'    
+    
 
 class Ingredient(models.Model):
     #pk = models.AutoField(auto_created=True, primary_key=True, serialize=False)
