@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% load thumbnail %}
-
+{% load ratings %}
 {% block content %}
 {% thumbnail recipe.recipe_image 1110x425 crop upscale  as thumb %}
 <!-- ##### Breadcumb Area Start ##### -->
@@ -82,11 +82,12 @@
                     <div class="col-12 col-md-4">
                         <div class="receipe-ratings text-right my-1">
                             <div class="ratings">
+                                {% ratings object %}
+                                {% comment %} <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i> {% endcomment %}
                             </div>
                            <button href="#" class="btn delicious-btn" disabled>{{recipe.get_level_display}}</button>
                         </div>

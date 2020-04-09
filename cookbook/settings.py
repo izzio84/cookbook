@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'filer',
     'mptt',
+    'star_ratings',
     'recipes'
 ]
 
@@ -73,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                # 'django.core.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -161,3 +163,4 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
+STAR_RATINGS_ANONYMOUS = True
